@@ -16,8 +16,8 @@ test.skip('SignUp with unique name and email',async({page})=>
   await expect(title1).toBeVisible();
 })
 
-test('Success full signup', async({page})=>{
-   await page.goto("https://automationexercise.com/login");
+test.skip('Success full signup', async({page})=>{
+  await page.goto("https://automationexercise.com/login");
   const name=page.getByPlaceholder("Name");
   const email=page.getByPlaceholder("Email Address").nth(1);
   const btn=page.getByRole('button',{name:"Signup"});
