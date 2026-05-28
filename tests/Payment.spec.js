@@ -9,7 +9,7 @@ test.describe('Testing the Payment Page',()=>{
         await payment.navigate();
     });
 
-    test.skip("Testing the Place Order Button in the checkout page",async({page})=>{
+    test("Testing the Place Order Button in the checkout page",async({page})=>{
         await payment.navigate();
         await payment.login();
         await payment.add();
@@ -19,18 +19,18 @@ test.describe('Testing the Payment Page',()=>{
         await expect(payment.placeOrderBtn).toBeVisible();
     });
 
-    test.skip("Testing clicking on place order button redirect us to the payment page ",async({page})=>{
+    test("Testing clicking on place order button redirect us to the payment page ",async({page})=>{
         await payment.placeOrder();
         await expect(page.getByRole("heading",{name:"Payment"})).toBeVisible();
     })
 
-    test.skip("Testing clicking of Pay and confirm Order Button without filling any details",async({page})=>{
+    test("Testing clicking of Pay and confirm Order Button without filling any details",async({page})=>{
         await payment.placeOrder();
         await page.getByRole("button",{name:"Pay and Confirm Order"}).click();
         expect(page).toHaveURL("https://automationexercise.com/payment");
     })
 
-    test.skip("Testing the payment page By providing all the details",async({page})=>{
+    test("Testing the payment page By providing all the details",async({page})=>{
         await payment.placeOrder();
         await payment.name_on_card.fill("user");
         await payment.card_Number.fill("12345");
@@ -41,7 +41,7 @@ test.describe('Testing the Payment Page',()=>{
         await expect(page.getByRole("heading",{name:"Order Placed!"})).toBeVisible();
     })
     
-    test.skip("Testing the continue button clicking in the order placed page will redirect to the home page",async({page})=>{
+    test("Testing the continue button clicking in the order placed page will redirect to the home page",async({page})=>{
         await payment.placeOrder();
         await payment.name_on_card.fill("user");
         await payment.card_Number.fill("12345");
@@ -53,7 +53,7 @@ test.describe('Testing the Payment Page',()=>{
         await expect(page).toHaveURL("https://automationexercise.com/");
     });
 
-    test.skip("Testing the place order with missing card number",async({page})=>{
+    test("Testing the place order with missing card number",async({page})=>{
         await payment.placeOrder();
         await payment.name_on_card.fill("user");
         await payment.cvc.fill("311");
@@ -63,7 +63,7 @@ test.describe('Testing the Payment Page',()=>{
         expect(page).toHaveURL("https://automationexercise.com/payment");
     });
 
-    test.skip("Testing the place order with missing cvc input ",async({page})=>{
+    test("Testing the place order with missing cvc input ",async({page})=>{
         await payment.placeOrder();
         await payment.name_on_card.fill("user");
         await payment.card_Number.fill("12345");
@@ -73,7 +73,7 @@ test.describe('Testing the Payment Page',()=>{
         expect(page).toHaveURL("https://automationexercise.com/payment");
     });
 
-    test.skip("Testing the place order with missing Expiration Month input ",async({page})=>{
+    test("Testing the place order with missing Expiration Month input ",async({page})=>{
         await payment.placeOrder();
         await payment.name_on_card.fill("user");
         await payment.card_Number.fill("12345");
@@ -83,7 +83,7 @@ test.describe('Testing the Payment Page',()=>{
         await expect(page).toHaveURL("https://automationexercise.com/payment");
     });
 
-    test.skip("Testing the place order with missing Expiration Year input ",async({page})=>{
+    test("Testing the place order with missing Expiration Year input ",async({page})=>{
         await payment.placeOrder();
         await payment.name_on_card.fill("user");
         await payment.card_Number.fill("12345");

@@ -1,4 +1,4 @@
-// @ts-check
+/*// @ts-check
 import { test, expect } from '@playwright/test';
 
 test.skip('SignUp with unique name and email',async({page})=>
@@ -16,7 +16,7 @@ test.skip('SignUp with unique name and email',async({page})=>
   await expect(title1).toBeVisible();
 })
 
-test.skip('Success full signup', async({page})=>{
+/*test.skip('Success full signup', async({page})=>{
   await page.goto("https://automationexercise.com/login");
   const name=page.getByPlaceholder("Name");
   const email=page.getByPlaceholder("Email Address").nth(1);
@@ -54,7 +54,7 @@ test.skip('Success full signup', async({page})=>{
     // 10. Proceed to dashboard verification step
     await page.getByRole('link', { name: 'Continue' }).click();
 
-});
+});*/
 
 
 

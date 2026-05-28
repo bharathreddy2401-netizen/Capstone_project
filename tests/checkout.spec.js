@@ -9,7 +9,7 @@ test.describe("Testing the checkout functionality of the automation exercise",()
         await checkout.navigate();
             
      });
-     
+
 
      test("Testing the Checkout button on the cart page when cart has products", async({page})=>{
         await checkout.add();
@@ -134,4 +134,5 @@ test.describe("Testing the checkout functionality of the automation exercise",()
         await checkout.checkoutbtn();
         await expect(page.locator(".cart_total_price").nth(2)).toBeVisible();//toHaveText(/1500/);
      })
+
 });
