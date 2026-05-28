@@ -8,6 +8,16 @@ test.describe("Testing the Cart Functionality",()=>{
             await cart.navigate();
     });
 
+    test.afterEach(async({page})=>{
+        await page.goto('https://automationexercise.com/view_cart');
+        const deleteButtons = page.locator('.cart_quantity_delete');
+        const count = await deleteButtons.count();
+        for (let i = 0; i < count; i++) {
+            await deleteButtons.nth(0).click(); 
+             
+    }
+    })
+
     test("Testing the click on add cart button pops the message added to cart",async ({page})=>{
         await cart.add();
         await expect(page.getByRole("button",{name:"Continue Shopping"})).toBeVisible();
