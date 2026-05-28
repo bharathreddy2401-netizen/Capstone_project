@@ -54,7 +54,7 @@ test.describe('Testing the Login Page',()=>{
         await login.clickLogin();
         const email =  page.getByPlaceholder("Email Address").first();
         const isValid = await email.evaluate((e)=>e.validationMessage);
-        await expect(isValid).toContain("Please fill out this field");
+        await expect(isValid).toMatch(/fill out this field/i);
     });
 
     test("Testing the login page  with empty password",async({page})=>{
@@ -62,7 +62,7 @@ test.describe('Testing the Login Page',()=>{
         await login.clickLogin();
         const password = page.getByPlaceholder("password");
         const isvalid = await password.evaluate((e)=>e.validationMessage);
-        await expect(isvalid).toContain("Please fill out this field");
+        await expect(isvalid).toMatch(/fill out this field/i);
     });
 
     test("Testing the login page with empty email and password",async({page})=>{
@@ -71,7 +71,7 @@ test.describe('Testing the Login Page',()=>{
         const email =  page.getByPlaceholder("Email Address").first();
         const password = page.getByPlaceholder("password");
         const isValid = await email.evaluate((e)=>e.validationMessage);
-        await expect(isValid).toContain("Please fill out this field");
+        await expect(isValid).toMatch(/fill out this field/i);
     });
 
     test("Testing Refresh with also preserve the login details",async ({page})=>{

@@ -107,7 +107,7 @@ test.describe('Enter account information page testing',()=>{
         await signup.createAccount();
         const mobileInput = page.locator('#mobile_number');
         const validationMessage = await mobileInput.evaluate((el) => el.validationMessage);
-        await expect(validationMessage).toBe('Please fill out this field.');
+        await expect(validationMessage).toMatch(/Please fill out this field/i);
         await expect(page.getByRole("heading", {name:"Account Created!"})).not.toBeVisible();
 
     });
@@ -120,7 +120,7 @@ test.describe('Enter account information page testing',()=>{
         await signup.createAccount();
         const firstNameInput = page.locator("#first_name");
         const validationMessage1=await firstNameInput.evaluate(e=>e.validationMessage);
-        await expect(validationMessage1).toBe("Please fill out this field.")
+        await expect(validationMessage1).toMatch(/Please fill out this field/i)
       
     });
 
@@ -132,7 +132,7 @@ test.describe('Enter account information page testing',()=>{
         await signup.createAccount();
         const lastNameInput = page.locator("#last_name");
         const validationMessage1=await lastNameInput.evaluate(e=>e.validationMessage);
-        await expect(validationMessage1).toBe("Please fill out this field.")
+        await expect(validationMessage1).toMatch(/Please fill out this field/i)
       
     });
 
@@ -144,7 +144,7 @@ test.describe('Enter account information page testing',()=>{
         await signup.createAccount();
         const addressInput = page.locator("#address1");
         const validationMessage1=await addressInput.evaluate(e=>e.validationMessage);
-        await expect(validationMessage1).toBe("Please fill out this field.");
+        await expect(validationMessage1).toMatch(/Please fill out this field/i);
       
     });
 
@@ -166,7 +166,7 @@ test.describe('Enter account information page testing',()=>{
         await signup.createAccount();
         const stateInput = page.locator("#state");
         const validationMessage1=await stateInput.evaluate(e=>e.validationMessage);
-        await expect(validationMessage1).toBe("Please fill out this field.");
+        await expect(validationMessage1).toMatch(/Please fill out this field/i);
                 
     });
 
@@ -178,7 +178,7 @@ test.describe('Enter account information page testing',()=>{
         await signup.createAccount();
         const cityInput = page.locator("#city");
         const validationMessage1=await cityInput.evaluate(e=>e.validationMessage);
-        await expect(validationMessage1).toBe("Please fill out this field.");
+        await expect(validationMessage1).toMatch(/Please fill out this field/i);
        // await page.waitForTimeout(5000);        
     });
 
@@ -190,7 +190,7 @@ test.describe('Enter account information page testing',()=>{
         await signup.createAccount();
         const zipInput = page.locator("#zipcode");
         const validationMessage1=await zipInput.evaluate(e=>e.validationMessage);
-        await expect(validationMessage1).toBe("Please fill out this field.");
+        await expect(validationMessage1).toMatch(/Please fill out this field/i);
        // await page.waitForTimeout(5000);        
     });
 

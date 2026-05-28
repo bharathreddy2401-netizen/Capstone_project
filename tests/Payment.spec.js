@@ -1,0 +1,107 @@
+import {test,expect} from "@playwright/test";
+import {Payment} from "../POM/payment";
+
+test.describe('Testing the Payment Page',()=>{
+    let payment;
+
+    test.beforeEach(async ({page})=>{
+        payment=new Payment(page);
+        await payment.navigate();
+    });
+
+    test.skip("Testing the Place Order Button in the checkout page",async({page})=>{
+        await payment.navigate();
+        await payment.login();
+        await payment.add();
+        await payment.continue();
+        await payment.cart();
+        await payment.checkoutbtn();
+        await expect(payment.placeOrderBtn).toBeVisible();
+    });
+
+    test.skip("Testing clicking on place order button redirect us to the payment page ",async({page})=>{
+        await payment.placeOrder();
+        await expect(page.getByRole("heading",{name:"Payment"})).toBeVisible();
+    })
+
+    test.skip("Testing clicking of Pay and confirm Order Button without filling any details",async({page})=>{
+        await payment.placeOrder();
+        await page.getByRole("button",{name:"Pay and Confirm Order"}).click();
+        expect(page).toHaveURL("https://automationexercise.com/payment");
+    })
+
+    test.skip("Testing the payment page By providing all the details",async({page})=>{
+        await payment.placeOrder();
+        await payment.name_on_card.fill("user");
+        await payment.card_Number.fill("12345");
+        await payment.cvc.fill("311");
+        await payment.expiration.fill("12");
+        await payment.year.fill("2027");
+        await page.getByRole("button",{name:"Pay and Confirm Order"}).click();
+        await expect(page.getByRole("heading",{name:"Order Placed!"})).toBeVisible();
+    })
+    
+    test.skip("Testing the continue button clicking in the order placed page will redirect to the home page",async({page})=>{
+        await payment.placeOrder();
+        await payment.name_on_card.fill("user");
+        await payment.card_Number.fill("12345");
+        await payment.cvc.fill("311");
+        await payment.expiration.fill("12");
+        await payment.year.fill("2027");
+        await page.getByRole("button",{name:"Pay and Confirm Order"}).click();
+        await page.getByRole("link",{name:"Continue"}).click();
+        await expect(page).toHaveURL("https://automationexercise.com/");
+    });
+
+    test.skip("Testing the place order with missing card number",async({page})=>{
+        await payment.placeOrder();
+        await payment.name_on_card.fill("user");
+        await payment.cvc.fill("311");
+        await payment.expiration.fill("12");
+        await payment.year.fill("2027");
+        await page.getByRole("button",{name:"Pay and Confirm Order"}).click();
+        expect(page).toHaveURL("https://automationexercise.com/payment");
+    });
+
+    test.skip("Testing the place order with missing cvc input ",async({page})=>{
+        await payment.placeOrder();
+        await payment.name_on_card.fill("user");
+        await payment.card_Number.fill("12345");
+        await payment.expiration.fill("12");
+        await payment.year.fill("2027");
+        await page.getByRole("button",{name:"Pay and Confirm Order"}).click();
+        expect(page).toHaveURL("https://automationexercise.com/payment");
+    });
+
+    test.skip("Testing the place order with missing Expiration Month input ",async({page})=>{
+        await payment.placeOrder();
+        await payment.name_on_card.fill("user");
+        await payment.card_Number.fill("12345");
+        await payment.cvc.fill("311");
+        await payment.year.fill("2027");
+        await page.getByRole("button",{name:"Pay and Confirm Order"}).click();
+        await expect(page).toHaveURL("https://automationexercise.com/payment");
+    });
+
+    test.skip("Testing the place order with missing Expiration Year input ",async({page})=>{
+        await payment.placeOrder();
+        await payment.name_on_card.fill("user");
+        await payment.card_Number.fill("12345");
+        await payment.cvc.fill("311");
+        await payment.expiration.fill("12");
+        await page.getByRole("button",{name:"Pay and Confirm Order"}).click();
+        await expect(page).toHaveURL("https://automationexercise.com/payment");
+    });
+
+    test("Testing the visibility of Download Invoice button in the order placed page",async({page})=>{
+        await payment.placeOrder();
+        await payment.name_on_card.fill("user");
+        await payment.card_Number.fill("12345");
+        await payment.cvc.fill("311");
+        await payment.expiration.fill("12");
+        await payment.year.fill("2027");
+        await page.getByRole("button",{name:"Pay and Confirm Order"}).click();
+        await expect(page.getByRole("link",{name:"Download Invoice"})).toBeVisible();
+
+    })
+});

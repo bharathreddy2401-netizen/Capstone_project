@@ -9,6 +9,7 @@ test.describe("Testing the checkout functionality of the automation exercise",()
         await checkout.navigate();
             
      });
+     
 
      test("Testing the Checkout button on the cart page when cart has products", async({page})=>{
         await checkout.add();
@@ -123,7 +124,7 @@ test.describe("Testing the checkout functionality of the automation exercise",()
         await expect(page.getByRole("heading",{name:"Blue Top"})).toBeVisible();
      })
 
-     test.skip("Testing checking the total amount in case of multiple items in cart at checkout",async({page})=>{
+     test("Testing checking the total amount in case of multiple items in cart at checkout",async({page})=>{
         await page.getByRole("link",{name:"Login"}).click();
         await checkout.login();
         await page.getByRole("link",{name: "View Product"}).nth(6).click();
