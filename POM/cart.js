@@ -8,6 +8,8 @@ export class Cart
         this.TshirtBtn = page.getByRole("button",{name: "Add to cart"});       
         this.cart = page.getByRole("link",{name:"Cart"});
         this.continuebtn = page.getByRole("button", {name:"Continue Shopping"});
+        this.email = page.getbyPlaceholder("Email Address").first();
+        this.password = page.getbyPlaceholder("Password");
     }
 
     async navigate()
@@ -35,5 +37,11 @@ export class Cart
     async continue()
     {
         await this.continuebtn.click();
+    }
+
+    async login()
+    {
+        await this.email.fill("Auser12345@gmail.com");
+        await this.password.fill("user12345");
     }
 }
