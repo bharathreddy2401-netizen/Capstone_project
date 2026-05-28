@@ -37,7 +37,7 @@ test.describe("Testing the Contact us Functionality",()=>{
     });
 
     test("Testing clicking on the Home button after submitting the form redirects to home",async({page})=>{
-         await contact.contactus();
+        await contact.contactus();
         await page.getByPlaceholder("Name").fill("User12345");
         await page.getByPlaceholder("Email").first().fill("User12345@gmail.com");
         await page.getByPlaceholder("Subject").fill("Greetings");
@@ -50,4 +50,38 @@ test.describe("Testing the Contact us Functionality",()=>{
         await expect(page).toHaveURL("https://automationexercise.com/");
     
     });
+
+    test("missing the name field and submitting the form",async({page})=>{
+        await contact.contactus();
+        await page.getByPlaceholder("Email").first().fill("User12345@gmail.com");
+        await page.getByPlaceholder("Subject").fill("Greetings");
+        await page.getByPlaceholder("Your Message Here").fill("Hello Good Morning");
+        page.on('dialog',async dialog =>{
+            await dialog.accept();
+        })
+        await page.locator('input[name="submit"]').click();
+        await expect(page.locator(".status.alert.alert-success")).toHaveText("Success! Your details have been submitted successfully.");
+    });
+
+    test("Testing By missing the email field and submitting the form",async({page})=>{
+        await contact.contactus();
+        await page.getByPlaceholder("Name").fill("User12345");
+        await page.getByPlaceholder("Email").first().fill("User12345@gmail.com");
+        await page.getByPlaceholder("Subject").fill("Greetings");
+        await page.getByPlaceholder("Your Message Here").fill("Hello Good Morning");
+        await page.locator('input[name="submit"]').click();
+        await expect(page.locator('input[name="submit"]')).toBeVisible();
+    });
+
+    test("Testing by missing the subject field and submitting",async({page})=>{
+        await contact.contactus();
+        await page.getByPlaceholder("Name").fill("User12345");
+        await page.getByPlaceholder("Email").first().fill("User12345@gmail.com");
+        await page.getByPlaceholder("Your Message Here").fill("Hello Good Morning");
+        page.on('dialog',async dialog =>{
+            await dialog.accept();
+        })
+        await page.locator('input[name="submit"]').click();
+        await expect(page.locator(".status.alert.alert-success")).toHaveText("Success! Your details have been submitted successfully.");
+    })
 });

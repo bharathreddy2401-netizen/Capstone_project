@@ -92,7 +92,7 @@ test.describe("Testing the Cart Functionality",()=>{
     test("Testing the clicking of item in cart directs us to the product page of that item",async({page})=>{
         await cart.add();
         await cart.continue();
-        await cart.cartbtn();
+        await cart.cartbtn(); 
         await page.getByRole("link",{name:"Blue Top"}).click();
         await expect(page.getByRole("heading",{name:"Blue Top"})).toBeVisible(); 
     })
