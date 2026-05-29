@@ -9,6 +9,36 @@ test.describe('Testing the Login Page',()=>{
         await login.navigate();
     });
 
+    test("Testing the Visibility of login page , email and password",async({page})=>{
+        await expect(page.getByRole("heading",{name:"Login to your account"})).toBeVisible();
+        await expect(page.getByPlaceholder("Email Address").first()).toBeVisible();
+        await expect(page.getByPlaceholder("Password")).toBeVisible();
+        await expect(page.getByRole("button",{name:"Login"})).toBeVisible();
+    })
+
+    test("Testing the password input field uses masking",async({page})=>{
+        const passwordField = page.getByPlaceholder("Password");
+        await expect(passwordField).toHaveAttribute("type", "password");
+    })
+
+    test("Testing Login form Submission by pressing Enter key instead of clicking login button",async({page})=>{
+        await login.filllogin("Auser12345@gmail.com", "user12345");
+        await page.getByPlaceholder("Password").press("Enter");
+        await expect(page.getByText('Logged in as user12345')).toBeVisible();
+    });
+
+    test("Testing the password case sensitivity for login",async({page})=>{
+        await login.filllogin("Auser12345@gmail.com", "user12345");
+        await login.clickLogin();
+        await expect(page.getByRole("paragraph",{name:"Your email or password is incorrect!"}));
+    });
+
+    test("Testing the email input field with extra spaces does not give error",async({page})=>{
+        await login.filllogin("  Auser12345@gmail.com  ", "user12345");
+        await login.clickLogin();
+        await expect(page.getByText('Logged in as user12345')).toBeVisible();
+    })
+
     test('Testing the login page with valid email and password',async({page})=>{
         await login.filllogin("Auser12345@gmail.com","user12345");
         await login.clickLogin();
