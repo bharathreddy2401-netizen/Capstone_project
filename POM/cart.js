@@ -6,7 +6,7 @@ export class Cart
         this.addToCart = page.locator('.add-to-cart').first();
         this.Tshirt = page.getByRole("link",{ name: "View Product"}).nth(1); 
         this.TshirtBtn = page.getByRole("button",{name: "Add to cart"});       
-        this.cart = page.getByRole("link",{name:"Cart"});
+        this.cart = page.getByRole("link",{name:"Cart"}).first();
         this.continuebtn = page.getByRole("button", {name:"Continue Shopping"});
         this.email = page.getByPlaceholder("Email Address").first();
         this.password = page.getByPlaceholder("Password");

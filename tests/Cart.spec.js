@@ -1,29 +1,21 @@
 import {test,expect} from "@playwright/test";
 import {Cart} from "../POM/cart";
 
-test.describe("Testing the Cart Functionality",()=>{
+test.describe("Testing the Cart Functionality without login",()=>{
     let cart;
     test.beforeEach(async ({page})=>{
             cart=new Cart(page);
             await cart.navigate();
     });
 
-    test.afterEach(async({page})=>{
-        await page.goto('https://automationexercise.com/view_cart');
-        const deleteButtons = page.locator('.cart_quantity_delete');
-        const count = await deleteButtons.count();
-        for (let i = 0; i < count; i++) {
-            await deleteButtons.nth(0).click(); 
-             
-    }
-    })
+   
 
     test("Testing the click on add cart button pops the message added to cart",async ({page})=>{
         await cart.add();
         await expect(page.getByRole("button",{name:"Continue Shopping"})).toBeVisible();
     });
 
-    test("Testing the empty cart by directly going to cart without addin products",async({page})=>{
+    test("Testing the empty cart by directly going to cart without adding products",async({page})=>{
         await cart.cartbtn();
         await expect(page.locator("#empty_cart p b")).toHaveText(/Cart is empty!/);
     });
@@ -117,4 +109,71 @@ test.describe("Testing the Cart Functionality",()=>{
 
     });
 
-})
+    test("Testing by adding the item from going to category",async({page})=>{
+        await page.getByRole("link",{name:"Products"}).click();
+        await page.getByRole("link",{name:"Women"}).click();
+        await page.getByRole("link",{name:"Saree"}).click();
+        await page.locator(".productinfo").first();
+        await page.getByRole("link",{name:"Add to cart"}).first().click();
+        await cart.continue();
+        await cart.cartbtn();
+        await expect(page.getByRole("link",{name:"Cotton Silk Hand Block Print Saree"})).toBeVisible();
+    });    
+
+    test("Testing by adding product to the cart directly from the search results page",async({page})=>{
+        await page.getByRole("link",{name:"Products"}).click();
+        await page.getByPlaceholder("Search Product").fill("Frozen Tops For Kids");
+        await page.locator("#submit_search").click();
+        await page.getByRole('link',{name:"View Product"}).click();
+        await page.getByRole("button",{name:"Add to cart"}).click();
+        await cart.continue();
+        await cart.cartbtn();
+        await expect(page.getByRole("link",{name:"Frozen Tops For Kids"})).toBeVisible();
+    })
+    
+});
+
+test.describe("Testing the Cart Functionality with login",()=>{
+    let cart1;
+    test.beforeEach(async ({page})=>{
+            cart1=new Cart(page);
+            await cart1.navigate();
+    });
+
+    test.afterEach(async({page})=>{
+        await page.goto('https://automationexercise.com/view_cart');
+        const deleteButtons = page.locator('.cart_quantity_delete');
+        const count = await deleteButtons.count();
+        for (let i = 0; i < count; i++) {
+            await deleteButtons.nth(0).click(); 
+             
+    }
+    })
+
+    test("Testing by adding an item as a guest and then log in then the cart synchronices to it",async({page})=>{
+        await cart1.add();
+        await cart1.continue();
+        await page.getByRole("link",{name:"Signup / Login"}).click();
+        await cart1.login();
+        await page.getByRole("button",{name:"Login"}).click();
+        await cart1.cartbtn();
+        await expect(page.getByRole("link",{name:"Blue Top"})).toBeVisible();
+    });
+
+    test("Testing the cart first by login and adding the product then logout and then re login will display the product",async({page})=>{
+        await page.getByRole("link",{name:"Signup / Login"}).click();
+        await cart1.login();
+        await page.getByRole("button",{name:"Login"}).click();
+        await cart1.add();
+        await cart1.continue();
+        await cart1.cartbtn();
+        await expect(page.getByRole("link",{name:"Blue Top"})).toBeVisible();
+        await page.getByRole("link",{name:"Logout"}).click();
+        await cart1.login();
+        await page.getByRole("button",{name:"Login"}).click();
+        await cart1.cartbtn();
+        await expect(page.getByRole("link",{name:"Blue Top"})).toBeVisible();
+
+    })
+   
+});
