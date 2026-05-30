@@ -81,7 +81,7 @@ jobs:
       run: mkdir -p allure-results
  
     - name: Generate Allure Report
-      run: npm run allure:generate
+      run: npm run allure:generate -- --clean
       continue-on-error: true
  
     - name: Upload Allure HTML Report
