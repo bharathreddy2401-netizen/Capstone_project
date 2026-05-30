@@ -80,5 +80,5 @@ test.describe("Testing the Contact us Functionality",()=>{
       await page.getByPlaceholder("Add Review Here!").fill("Good product");
       await page.getByRole("button",{name:"Submit"}).click();
       await expect(page.locator(".alert-success.alert").first()).toBeVisible();
-    })
+    });
 });

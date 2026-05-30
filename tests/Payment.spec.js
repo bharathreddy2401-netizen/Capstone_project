@@ -103,5 +103,26 @@ test.describe('Testing the Payment Page',()=>{
         await page.getByRole("button",{name:"Pay and Confirm Order"}).click();
         await expect(page.getByRole("link",{name:"Download Invoice"})).toBeVisible();
 
-    })
+    });
+    
+    test("Testing the cart after the payment shows empty cart",async({page})=>{
+        await payment.placeOrder();
+        await payment.name_on_card.fill("user");
+        await payment.card_Number.fill("12345");
+        await payment.cvc.fill("311");
+        await payment.expiration.fill("12");
+        await payment.year.fill("2027");
+        await page.getByRole("button",{name:"Pay and Confirm Order"}).click();
+        await page.getByRole("link",{name: "Cart"}).click();
+        await expect(page.getByText("Cart is empty!")).toBeVisible();
+    });
+
+    test("Testing back-navigation from payment page preserves checkout choices", async ({ page }) => {
+        await payment.placeOrder();
+        await expect(page.getByRole("heading", { name: "Payment" })).toBeVisible();
+        await page.goBack();
+        await expect(page.locator("#cart_info")).toBeVisible();
+        await page.goForward();
+        await expect(page.getByRole("heading", { name: "Payment" })).toBeVisible();
+    });
 });

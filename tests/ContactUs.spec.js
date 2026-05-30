@@ -83,5 +83,24 @@ test.describe("Testing the Contact us Functionality",()=>{
         })
         await page.locator('input[name="submit"]').click();
         await expect(page.locator(".status.alert.alert-success")).toHaveText("Success! Your details have been submitted successfully.");
+    });
+
+    test("Testing with invald email input",async({page})=>{
+        await contact.contactus();
+        await page.getByPlaceholder("Name").fill("User12345");
+        const emailInput = page.getByPlaceholder("Email").first();
+        await emailInput.fill("invalid.com");
+        await page.getByPlaceholder("Subject").fill("Testing");
+        await page.locator('input[name="submit"]').click();
+        const isEmailFieldValid = await emailInput.evaluate((el) => el.validity.valid);
+        await expect(isEmailFieldValid).toBeFalsy();
+        await expect(page.locator(".status.alert.alert-success")).not.toBeVisible();
+    });
+
+    test("Testing the visibility of Feedback for us and get in touch ",async({page})=>{
+        await contact.contactus();
+        await expect(page.getByRole("heading", { name: "Feedback For Us" })).toBeVisible();
+        await expect(page.getByRole("link", { name: "feedback@automationexercise.com" })).toBeVisible();
+
     })
 });
