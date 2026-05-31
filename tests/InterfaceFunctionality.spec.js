@@ -1,7 +1,7 @@
 import {test,expect} from "@playwright/test";
 import {Interface} from "../POM/interface";
 
-test.describe("Testing the Contact us Functionality",()=>{
+test.describe("Testing the Interface Functionality",()=>{
     let display;
     test.beforeEach(async ({page})=>{
             display=new Interface(page);
@@ -81,4 +81,47 @@ test.describe("Testing the Contact us Functionality",()=>{
       await page.getByRole("button",{name:"Submit"}).click();
       await expect(page.locator(".alert-success.alert").first()).toBeVisible();
     });
+
+    test("Testing the product review block by missing the Name",async({page})=>{
+      await page.getByRole("link",{name:"Products"}).click();
+      await page.getByRole("link",{name:"View Product"}).first().click();
+      await page.getByPlaceholder("Email Address").first().fill("Auser1235@gmail.com");
+      await page.getByPlaceholder("Add Review Here!").fill("Good product");
+      await page.getByRole("button",{name:"Submit"}).click();
+      await expect(page.locator(".alert-success.alert").first()).not.toBeVisible();
+    
+    });
+
+     test("Testing the product review block by missing the Email",async({page})=>{
+      await page.getByRole("link",{name:"Products"}).click();
+      await page.getByRole("link",{name:"View Product"}).first().click();
+      await page.getByPlaceholder("Your Name").fill("user12345");
+      await page.getByPlaceholder("Add Review Here!").fill("Good product");
+      await page.getByRole("button",{name:"Submit"}).click();
+      await expect(page.locator(".alert-success.alert").first()).not.toBeVisible();
+    
+    });
+
+    test("Testing Product review block in products page with missing review",async({page})=>{
+      await page.getByRole("link",{name:"Products"}).click();
+      await page.getByRole("link",{name:"View Product"}).first().click();
+      await expect(page.getByText("Write Your Review")).toBeVisible();
+      await page.getByPlaceholder("Your Name").fill("user12345");
+      await page.getByPlaceholder("Email Address").first().fill("Auser1235@gmail.com");
+      await page.getByRole("button",{name:"Submit"}).click();
+      await expect(page.locator(".alert-success.alert").first()).not.toBeVisible();
+    });
+
+    test("Testing Product review block in products page with wrong email format",async({page})=>{
+      await page.getByRole("link",{name:"Products"}).click();
+      await page.getByRole("link",{name:"View Product"}).first().click();
+      await expect(page.getByText("Write Your Review")).toBeVisible();
+      await page.getByPlaceholder("Your Name").fill("user12345");
+      await page.getByPlaceholder("Email Address").first().fill("user123@");
+      await page.getByPlaceholder("Add Review Here!").fill("Good product");
+      await page.getByRole("button",{name:"Submit"}).click();
+      await expect(page.locator(".alert-success.alert").first()).not.toBeVisible();
+    });
+
+    
 });
