@@ -8,7 +8,7 @@ test.describe("Testing the Interface Functionality",()=>{
             await display.navigate();
     });
 
-    test("Testing interface dispaly of home page",async({page})=>{
+    test("Testing interface display of home page",async({page})=>{
        await expect(display.home_heading).toBeVisible();
        await expect(display.home_category).toBeVisible();
        await expect(display.home_brands).toBeVisible();
@@ -36,6 +36,10 @@ test.describe("Testing the Interface Functionality",()=>{
       await expect(page.getByText("Graphic Design Men T Shirt-Blue")).toBeTruthy();
     });
 
+    test("Testing the display of Special offer banner in product page",async({page})=>{
+      await page.getByRole("link",{name:"Products"}).click();
+      await expect(page.locator("#sale_image")).toBeVisible();
+    });
     test("Testing clicking the product link in the header will redirect to product page",async({page})=>{
       await page.getByRole("link",{name:"Products"}).click();
       await expect(page.getByRole("heading",{name:"All Products"})).toBeVisible();
@@ -55,6 +59,18 @@ test.describe("Testing the Interface Functionality",()=>{
       await page.locator("#subscribe").click();
       await expect(page.locator("#success-subscribe")).toBeVisible();
     });
+
+    test("Testing the subscription block with empty email field",async({page})=>{
+      await page.locator("#susbscribe_email").fill("");
+      await page.locator("#subscribe").click();
+      await expect(page.locator("#success-subscribe")).not.toBeVisible();
+    });
+
+    test("Testing the Subscription block validation with wrong email format",async({page})=>{
+      await page.locator("#susbscribe_email").fill("testuser@invaliddomain");
+      await page.locator("#subscribe").click();
+      await expect(page.locator("#success-subscribe")).not.toBeVisible();
+    })
 
     test("Testing the visibility of products availability,condition and brand",async({page})=>{
       await page.getByRole("link",{name:"Products"}).click();
@@ -92,7 +108,7 @@ test.describe("Testing the Interface Functionality",()=>{
     
     });
 
-     test("Testing the product review block by missing the Email",async({page})=>{
+    test("Testing the product review block by missing the Email",async({page})=>{
       await page.getByRole("link",{name:"Products"}).click();
       await page.getByRole("link",{name:"View Product"}).first().click();
       await page.getByPlaceholder("Your Name").fill("user12345");
