@@ -36,6 +36,53 @@ test.describe("Testing the Interface Functionality",()=>{
       await expect(page.getByText("Graphic Design Men T Shirt-Blue")).toBeTruthy();
     });
 
+
+    test("Testing the categories slidbar expands and collapses options dynamically",async({page})=>{
+      const kidsCategory = page.getByRole("link", { name: "Kids" });
+      await kidsCategory.first().click();
+      const dressSubCategory = page.getByRole("link", { name: "Dress" });
+      await expect(dressSubCategory).toBeVisible();
+      await kidsCategory.first().click();
+      await expect(dressSubCategory).not.toBeVisible();
+    });
+
+    test("Testing the brand filter navigates to that brand products page",async({page})=>{
+      await page.getByRole("link", { name: "Products" }).click();
+      await page.getByRole("link", { name: "Madame" }).click();
+      await expect(page.getByRole("heading", { name: "Brand - Madame Products" })).toBeVisible();
+      await expect(page).toHaveURL("https://automationexercise.com/brand_products/Madame");
+    });
+
+    test("Testing the image slider controls change home banner contexts",async({page})=>{
+      await expect(page.getAttribute("src").first()).toBeVisible();
+      await page.locator(".fa-angle-right").first().click();
+    });
+
+    test("Testing the buttom scroll up arrow button returns to the header",async({page})=>{
+      await page.getByRole("link", { name: "Products" }).click();
+      const subscriptionHeading = page.getByRole("heading", { name: "Subscription" });
+      await subscriptionHeading.scrollIntoViewIfNeeded(); 
+      await expect(subscriptionHeading).toBeVisible();
+      const scrollUpArrow = page.locator("#scrollUp");
+      await expect(scrollUpArrow).toBeVisible();
+      await scrollUpArrow.click();
+      await expect(page.getByRole("link", { name: "Home" })).toBeInViewport();
+    });
+
+    test("Testing the view product displays the product details without missing any data",async({page})=>{
+      await page.getByRole("link", { name: "Products" }).click();
+      await page.getByRole("link", { name: "View Product" }).nth(2).click();
+      await expect(page.getByRole("heading",{name:"Sleeveless Dress"})).toBeVisible();
+      await expect(page.getByText("Category: Women > Dress")).toBeVisible();
+      await expect(page.getByText("Rs. 1000")).toBeVisible();
+      await expect(page.getByText("Quantity")).toBeVisible();
+      await expect(page.getByText("Availability: In Stock")).toBeVisible();
+      await expect(page.getByText("Condition: New")).toBeVisible();
+      await expect(page.getByText("Brand: Madame")).toBeVisible();
+     
+    })
+
+
     test("Testing the display of Special offer banner in product page",async({page})=>{
       await page.getByRole("link",{name:"Products"}).click();
       await expect(page.locator("#sale_image")).toBeVisible();
