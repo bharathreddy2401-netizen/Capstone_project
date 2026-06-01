@@ -133,6 +133,16 @@ test.describe("Testing the checkout functionality of the automation exercise",()
         await checkout.cart();
         await checkout.checkoutbtn();
         await expect(page.locator(".cart_total_price").nth(2)).toBeVisible();//toHaveText(/1500/);
+     });
+
+     test("Testing the comment textarea input data before placing order",async({page})=>{
+        await page.getByRole("link", { name: "Login" }).click();
+        await checkout.login();
+        await checkout.cart();
+        await checkout.checkoutbtn();
+        const textarea = page.locator("textarea[name='message']");
+        await textarea.fill("Handle with care");
+        await expect(textarea).toHaveValue("Handle with care");
      })
 
 });
