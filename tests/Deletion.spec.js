@@ -15,8 +15,6 @@ test.describe("Testing the Account Delete Functionality",()=>{
     test("Testing the visibility of Delete Account button in the home page",async({page})=>{
         await page.getByRole("link",{name:"Signup / Login"}).click();
         await delete1.login();
-
-        
         await expect(page.getByRole("link",{name:"Delete Account"})).toBeVisible();
     });
 
