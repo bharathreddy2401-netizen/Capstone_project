@@ -1,0 +1,43 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: ContactUs.spec.js >> Testing the Contact us Functionality >> missing the name field and submitting the form
+- Location: tests/ContactUs.spec.js:54:9
+
+# Error details
+
+```
+Error: page.goto: Test ended.
+Call log:
+  - navigating to "https://automationexercise.com/", waiting until "load"
+
+```
+
+# Test source
+
+```ts
+  1  | export class Contact
+  2  | {
+  3  |     constructor(page)
+  4  |     {
+  5  |         this.page = page;
+  6  |         this.contactBtn = page.getByRole("link",{name:"Contact us"});
+  7  |     }
+  8  | 
+  9  |     async navigate()
+  10 |     {
+> 11 |         await this.page.goto("https://automationexercise.com/");
+     |                         ^ Error: page.goto: Test ended.
+  12 |     }
+  13 |     
+  14 |     async contactus()
+  15 |     {
+  16 |         await this.contactBtn.click();
+  17 |     }
+  18 | }
+```
