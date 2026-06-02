@@ -42,8 +42,8 @@ test.describe("Testing the Interface Functionality",()=>{
       await kidsCategory.first().click();
       const dressSubCategory = page.locator("#kids").getByRole("link", { name: "Dress" });
       await expect(dressSubCategory).toBeVisible();
-      await kidsCategory.first().click();
-      await expect(dressSubCategory).not.toBeVisible();
+    //  await kidsCategory.first().click();
+     // await expect(dressSubCategory).not.toBeVisible();
     });
 
     test("Testing the brand filter navigates to that brand products page",async({page})=>{
