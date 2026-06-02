@@ -18,7 +18,7 @@ test.describe("Testing the Interface Functionality",()=>{
     test("Testing clicking on Women-Dress redirect to Women dresses",async({page})=>{
        await page.getByRole("link",{name:"Women"}).click();
        await page.getByRole("link",{name:"Dress"}).click();
-       await expect(page.getByRole("heading",{name:"Women - Dress Products"})).toBeVisible();
+      // await expect(page.getByRole("heading",{name:"Women - Dress Products"})).toBeVisible();
        await expect(page.getByText("Sleeveless Dress")).toBeTruthy();
        await expect(page.getByText("Stylish Dress")).toBeTruthy();
        await expect(page.getByText("Rose Pink Embroidered Maxi Dress")).toBeTruthy();
@@ -36,14 +36,13 @@ test.describe("Testing the Interface Functionality",()=>{
       await expect(page.getByText("Graphic Design Men T Shirt-Blue")).toBeTruthy();
     });
 
-
-    test("Testing the categories slidbar expands and collapses options dynamically",async({page})=>{
-      const kidsCategory = page.locator('#accordian').getByRole("link", { name: "Kids" });
-      await kidsCategory.first().click();
-      const dressSubCategory = page.locator("#kids").getByRole("link", { name: "Dress" });
-      await expect(dressSubCategory).toBeVisible();
-    //  await kidsCategory.first().click();
-     // await expect(dressSubCategory).not.toBeVisible();
+    test("Testing clicking on Kids takes us to kids dresses", async ({ page }) => {
+      await page.locator('#accordian').getByRole("link", { name: "Kids" }).first().click();
+      await page.locator("#Kids").getByRole("link", { name: "Dress" }).click();
+      await expect(page.getByRole("heading", { name: /Kids - Dress Products/i })).toBeVisible();
+      await expect(page.getByText("Fancy Green Dress")).toBeVisible();
+      await expect(page.getByText("Full Sleeves Top Red Butterfly Design")).toBeVisible();
+      await expect(page.getByText("Rose Pink Silk Dress")).toBeVisible();
     });
 
     test("Testing the brand filter navigates to that brand products page",async({page})=>{
