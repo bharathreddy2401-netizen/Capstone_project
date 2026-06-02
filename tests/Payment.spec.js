@@ -125,4 +125,13 @@ test.describe('Testing the Payment Page',()=>{
         await page.goForward();
         await expect(page.getByRole("heading", { name: "Payment" })).toBeVisible();
     });
+
+    test("Testing browser refresh persistence on payment gateway screen", async ({ page }) => {
+        await payment.placeOrder();
+        await payment.name_on_card.fill("Refresh User");
+        await payment.card_Number.fill("98765");
+        await page.reload();
+        await expect(page.getByRole("heading", { name: "Payment" })).toBeVisible();
+        await expect(payment.name_on_card).toHaveValue(""); // Should be clean post-refresh
+    });
 });

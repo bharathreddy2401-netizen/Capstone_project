@@ -54,8 +54,14 @@ test.describe("Testing the Interface Functionality",()=>{
     });
 
     test("Testing the image slider controls change home banner contexts",async({page})=>{
-      await expect(page.getAttribute("src").first()).toBeVisible();
-      await page.locator(".fa-angle-right").first().click();
+      const firstBanner = page.locator('.item.active img').first();
+      await expect(firstBanner).toBeVisible();
+      const firstImgSrc = await firstBanner.getAttribute('src');
+      await page.locator('.fa-angle-right').first().click();
+      await page.waitForTimeout(1000);
+      const secondBanner = page.locator('.item.active img').first();
+      const secondImgSrc = await secondBanner.getAttribute('src');
+      expect(firstImgSrc).not.toBe(secondImgSrc);
     });
 
     test("Testing the buttom scroll up arrow button returns to the header",async({page})=>{

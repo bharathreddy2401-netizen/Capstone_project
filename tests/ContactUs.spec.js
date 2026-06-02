@@ -102,5 +102,15 @@ test.describe("Testing the Contact us Functionality",()=>{
         await expect(page.getByRole("heading", { name: "Feedback For Us" })).toBeVisible();
         await expect(page.getByRole("link", { name: "feedback@automationexercise.com" })).toBeVisible();
 
-    })
+    });
+
+    test("Testing the Page refresh completely empties the form when it is filled partially",async({page})=>{
+        await contact.contactus();
+        await page.getByPlaceholder("Name").fill("Something");
+        await page.getByPlaceholder("Email").first().fill("Auser12345@gmail.com");
+        await page.reload();
+        await expect(page.getByPlaceholder("Name")).toHaveValue("");
+        await expect(page.getByPlaceholder("Email").first()).toHaveValue("");
+    });
+    
 });
