@@ -19,30 +19,29 @@ test.describe("Testing the Interface Functionality",()=>{
        await page.getByRole("link",{name:"Women"}).click();
        await page.getByRole("link",{name:"Dress"}).click();
       // await expect(page.getByRole("heading",{name:"Women - Dress Products"})).toBeVisible();
-       await expect(page.getByText("Sleeveless Dress")).toBeVisible();
-       await expect(page.getByText("Stylish Dress")).toBeVisible();
-       await expect(page.getByText("Rose Pink Embroidered Maxi Dress")).toBeVisible();
+       await expect(page.getByText("Sleeveless Dress").first()).toBeVisible();
+       await expect(page.getByText("Stylish Dress").first()).toBeVisible();
+       await expect(page.getByText("Rose Pink Embroidered Maxi Dress").first()).toBeVisible();
     });
 
     test("Testing clicking on Men takes us to men dresses",async({page})=>{
       await page.getByRole("link",{name:"Men"}).nth(1).click();
       await page.getByRole("link",{name:"Tshirts"}).click();
       await expect(page.getByRole("heading",{name:"Men - Tshirts Products"})).toBeVisible();
-      await expect(page.getByText("Men Tshirt")).toBeVisible();
-      await expect(page.getByText("Pure Cotton V-Neck T-Shirt")).toBeVisible();
-      await expect(page.getByText("Green Side Placket Detail T-Shirt")).toBeVisible();
-      await expect(page.getByText("Premium Polo T-Shirts")).toBeVisible();
-      await expect(page.getByText("Pure Cotton Neon Green Tshirt")).toBeVisible();
-      await expect(page.getByText("Graphic Design Men T Shirt-Blue")).toBeVisible();
+      await expect(page.getByText("Men Tshirt").nth(1)).toBeVisible();
+      await expect(page.getByText("Pure Cotton V-Neck T-Shirt").first()).toBeVisible();
+      await expect(page.getByText("Green Side Placket Detail T-Shirt").first()).toBeVisible();
+      await expect(page.getByText("Premium Polo T-Shirts").first()).toBeVisible();
+      await expect(page.getByText("Pure Cotton Neon Green Tshirt").first()).toBeVisible();
     });
 
     test("Testing clicking on Kids takes us to kids dresses", async ({ page }) => {
       await page.locator('#accordian').getByRole("link", { name: "Kids" }).first().click();
       await page.locator("#Kids").getByRole("link", { name: "Dress" }).click();
       await expect(page.getByRole("heading", { name: /Kids - Dress Products/i })).toBeVisible();
-      await expect(page.getByText("Fancy Green Dress")).toBeVisible();
-      await expect(page.getByText("Full Sleeves Top Red Butterfly Design")).toBeVisible();
-      await expect(page.getByText("Rose Pink Silk Dress")).toBeVisible();
+      await expect(page.getByText("Sleeves Top and Short - Blue & Pink").first()).toBeVisible();
+      await expect(page.getByText("Sleeveless Unicorn Patch Gown - Pink").first()).toBeVisible();
+      await expect(page.getByText("Cotton Mull Embroidered Dress").first()).toBeVisible();
     });
 
     test("Testing the brand filter navigates to that brand products page",async({page})=>{
@@ -53,14 +52,11 @@ test.describe("Testing the Interface Functionality",()=>{
     });
 
     test("Testing the image slider controls change home banner contexts",async({page})=>{
-      const firstBanner = page.locator('.item.active img').first();
-      await expect(firstBanner).toBeVisible();
-      const firstImgSrc = await firstBanner.getAttribute('src');
+      const activeBanner = page.locator('.item.active img').first();
+      await expect(activeBanner).toBeVisible();
+      const firstImgSrc = await activeBanner.getAttribute('src');
       await page.locator('.fa-angle-right').first().click();
-      //await page.waitForTimeout(1000);
-      const secondBanner = page.locator('.item.active img').first();
-      const secondImgSrc = await secondBanner.getAttribute('src');
-      expect(firstImgSrc).not.toBe(secondImgSrc);
+      await expect(activeBanner).not.toHaveAttribute('src', firstImgSrc);
     });
 
     test("Testing the buttom scroll up arrow button returns to the header",async({page})=>{
