@@ -205,4 +205,20 @@ test.describe('Enter account information page testing',()=>{
         //await page.waitForTimeout(5000);        
     });
 
+    test("Testing the Name and email fields are pre -filled and disabled to change",async({page})=>{
+        const nameInput = page.locator('#name');
+        const emailInput = page.locator('#email');
+        await expect(nameInput).toHaveValue("Bharath");
+        const currentEmail = await emailInput.inputValue();
+        await expect(currentEmail).toContain('@example.com');
+    });
+    
+    test("Testing the address fields accepts numeric and special characters",async({page})=>{
+        await signup.fillPassword("Pass123!");
+        await signup.personalDetails("Bharath", "Reddy");
+        await signup.address("Apt #4B, 32/A-1 @ Street", "Hyderabad", "India", "Telangana", "Hyderabad", "500001", "+91-12345-67890");
+        await signup.createAccount();
+        await expect(page.getByRole("heading", { name: "Account Created!" })).toBeVisible();
+    })
+
 })

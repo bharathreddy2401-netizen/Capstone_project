@@ -15,6 +15,7 @@ test.describe("Testing the Account Delete Functionality",()=>{
     test("Testing the visibility of Delete Account button in the home page",async({page})=>{
         await page.getByRole("link",{name:"Signup / Login"}).click();
         await delete1.login();
+        await expect(page.getByText(/Logged in as/)).toBeVisible({ timeout: 7000 });
         await expect(page.getByRole("link",{name:"Delete Account"})).toBeVisible();
     });
 
@@ -58,4 +59,15 @@ test.describe("Testing the Account Delete Functionality",()=>{
         await delete1.signup();
         await expect(page.locator("#password")).toBeVisible();
     });
+
+    test("Testing by attempting to log in with a newly deleted account",async({page})=>{
+        await delete1.createAccount();
+        
+        await page.getByRole("link", { name: "Delete Account" }).click();
+        await expect(page.getByRole("heading", { name: "Account Deleted!" })).toBeVisible();
+        await page.getByRole("link", { name: "Continue" }).click();
+        await page.getByRole("link", { name: "Signup / Login" }).click();
+        await delete1.login();
+        await expect(page.getByText(/Your email or password is incorrect/i)).toBeVisible();
+    })
 });
