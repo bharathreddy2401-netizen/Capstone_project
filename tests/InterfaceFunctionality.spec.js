@@ -38,7 +38,7 @@ test.describe("Testing the Interface Functionality",()=>{
 
 
     test("Testing the categories slidbar expands and collapses options dynamically",async({page})=>{
-      const kidsCategory = page.getByRole("link", { name: "Kids" });
+      const kidsCategory = page.locator('#accordian').getByRole("link", { name: "Kids" });
       await kidsCategory.first().click();
       const dressSubCategory = page.getByRole("link", { name: "Dress" });
       await expect(dressSubCategory).toBeVisible();

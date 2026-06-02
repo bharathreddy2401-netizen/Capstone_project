@@ -14,9 +14,11 @@ test.describe("Testing the Account Delete Functionality",()=>{
 
     test("Testing the visibility of Delete Account button in the home page",async({page})=>{
         await page.getByRole("link",{name:"Signup / Login"}).click();
-        await delete1.login();
+        await delete1.createAccount();
         await expect(page.getByText(/Logged in as/)).toBeVisible({ timeout: 7000 });
         await expect(page.getByRole("link",{name:"Delete Account"})).toBeVisible();
+        await page.getByRole("link",{name:"Delete Account"}).click();
+ 
     });
 
     test("Testing the clicking on account delete button deletes our account and displays account deleted",async({page})=>{
