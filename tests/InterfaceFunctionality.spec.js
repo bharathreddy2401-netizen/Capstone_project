@@ -19,21 +19,21 @@ test.describe("Testing the Interface Functionality",()=>{
        await page.getByRole("link",{name:"Women"}).click();
        await page.getByRole("link",{name:"Dress"}).click();
       // await expect(page.getByRole("heading",{name:"Women - Dress Products"})).toBeVisible();
-       await expect(page.getByText("Sleeveless Dress")).toBeTruthy();
-       await expect(page.getByText("Stylish Dress")).toBeTruthy();
-       await expect(page.getByText("Rose Pink Embroidered Maxi Dress")).toBeTruthy();
+       await expect(page.getByText("Sleeveless Dress")).toBeVisible();
+       await expect(page.getByText("Stylish Dress")).toBeVisible();
+       await expect(page.getByText("Rose Pink Embroidered Maxi Dress")).toBeVisible();
     });
 
     test("Testing clicking on Men takes us to men dresses",async({page})=>{
       await page.getByRole("link",{name:"Men"}).nth(1).click();
       await page.getByRole("link",{name:"Tshirts"}).click();
       await expect(page.getByRole("heading",{name:"Men - Tshirts Products"})).toBeVisible();
-      await expect(page.getByText("Men Tshirt")).toBeTruthy();
-      await expect(page.getByText("Pure Cotton V-Neck T-Shirt")).toBeTruthy();
-      await expect(page.getByText("Green Side Placket Detail T-Shirt")).toBeTruthy();
-      await expect(page.getByText("Premium Polo T-Shirts")).toBeTruthy();
-      await expect(page.getByText("Pure Cotton Neon Green Tshirt")).toBeTruthy();
-      await expect(page.getByText("Graphic Design Men T Shirt-Blue")).toBeTruthy();
+      await expect(page.getByText("Men Tshirt")).toBeVisible();
+      await expect(page.getByText("Pure Cotton V-Neck T-Shirt")).toBeVisible();
+      await expect(page.getByText("Green Side Placket Detail T-Shirt")).toBeVisible();
+      await expect(page.getByText("Premium Polo T-Shirts")).toBeVisible();
+      await expect(page.getByText("Pure Cotton Neon Green Tshirt")).toBeVisible();
+      await expect(page.getByText("Graphic Design Men T Shirt-Blue")).toBeVisible();
     });
 
     test("Testing clicking on Kids takes us to kids dresses", async ({ page }) => {
@@ -57,7 +57,7 @@ test.describe("Testing the Interface Functionality",()=>{
       await expect(firstBanner).toBeVisible();
       const firstImgSrc = await firstBanner.getAttribute('src');
       await page.locator('.fa-angle-right').first().click();
-      await page.waitForTimeout(1000);
+      //await page.waitForTimeout(1000);
       const secondBanner = page.locator('.item.active img').first();
       const secondImgSrc = await secondBanner.getAttribute('src');
       expect(firstImgSrc).not.toBe(secondImgSrc);
