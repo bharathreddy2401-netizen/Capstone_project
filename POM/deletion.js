@@ -39,8 +39,10 @@ export class Delete {
     }
 
     async signup() {
+        const uniqueId = Date.now() + Math.floor(Math.random() * 1000);
+        const uniqueEmail = `user_${uniqueId}@example.com`;
         await this.name.fill("bh");
-        await this.email.fill("bh1@1");
+        await this.email.fill(uniqueEmail);
         await this.btn.click();
     }
 

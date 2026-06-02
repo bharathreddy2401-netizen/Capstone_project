@@ -18,7 +18,7 @@ test.describe("Testing the Account Delete Functionality",()=>{
         await expect(page.getByText(/Logged in as/)).toBeVisible({ timeout: 7000 });
         await expect(page.getByRole("link",{name:"Delete Account"})).toBeVisible();
         await page.getByRole("link",{name:"Delete Account"}).click();
- 
+    
     });
 
     test("Testing the clicking on account delete button deletes our account and displays account deleted",async({page})=>{
