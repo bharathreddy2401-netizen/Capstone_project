@@ -174,6 +174,6 @@ test.describe("Testing the Cart Functionality with login",()=>{
         await cart1.cartbtn();
         await expect(page.getByRole("link",{name:"Blue Top"})).toBeVisible();
 
-    });
+    })
    
 });
