@@ -148,7 +148,7 @@ test.describe("Testing the Cart Functionality with login",()=>{
             await deleteButtons.nth(0).click(); 
              
     }
-    });
+    })
 
     test("Testing by adding an item as a guest and then log in then the cart synchronices to it",async({page})=>{
         await cart1.add();
