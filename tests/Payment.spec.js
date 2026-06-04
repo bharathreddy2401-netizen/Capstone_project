@@ -22,13 +22,13 @@ test.describe('Testing the Payment Page',()=>{
     test("Testing clicking on place order button redirect us to the payment page ",async({page})=>{
         await payment.placeOrder();
         await expect(page.getByRole("heading",{name:"Payment"})).toBeVisible();
-    })
+    });
 
     test("Testing clicking of Pay and confirm Order Button without filling any details",async({page})=>{
         await payment.placeOrder();
         await page.getByRole("button",{name:"Pay and Confirm Order"}).click();
         expect(page).toHaveURL("https://automationexercise.com/payment");
-    })
+    });
 
     test("Testing the payment page By providing all the details",async({page})=>{
         await payment.placeOrder();
@@ -39,7 +39,7 @@ test.describe('Testing the Payment Page',()=>{
         await payment.year.fill("2027");
         await page.getByRole("button",{name:"Pay and Confirm Order"}).click();
         await expect(page.getByRole("heading",{name:"Order Placed!"})).toBeVisible();
-    })
+    });
     
     test("Testing the continue button clicking in the order placed page will redirect to the home page",async({page})=>{
         await payment.placeOrder();
